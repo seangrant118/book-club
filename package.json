@@ -1,0 +1,19 @@
+{
+  "name": "book-club",
+  "version": "1.0.0",
+  "description": "book-club",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seangrant118/book-club.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seangrant118/book-club/issues"
+  },
+  "homepage": "https://github.com/seangrant118/book-club#readme"
+}
