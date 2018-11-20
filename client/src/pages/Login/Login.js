@@ -9,6 +9,12 @@ class Login extends Component {
     password: ""
   };
 
+  // componentDidMount() {
+  //   if (this.props.username) {
+  //     return <Redirect to={{ pathname: "/" }} />;
+  //   }
+  // }
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
