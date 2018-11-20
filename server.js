@@ -4,7 +4,7 @@ const app = express();
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-// const passport = require("passport");
+const passport = require("passport");
 // const routes = require("./routes");
 
 // Port
@@ -16,15 +16,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Passport
-// app.use(
-//   session({
-//     secret: "VOm4GldakkQ2ZBUwchMMdVCK1ncJr",
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// )
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(
+  session({
+    secret: "VOm4GldakkQ2ZBUwchMMdVCK1ncJr",
+    resave: true,
+    saveUninitialized: true,
+  })
+)
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve static assets to heroku
 if (process.env.NODE_ENV === "production") {
@@ -33,12 +33,13 @@ if (process.env.NODE_ENV === "production") {
 
 // Add Routes
 // app.use(routes);
+require("./routes/apiRoutes")(app);
 
 // connect to MySQL
 const models = require("./models");
 
 models.sequelize
-  .sync({ Force: true })
+  .sync({ force: true })
   .then(function() {
     console.log("Database Connected");
 
