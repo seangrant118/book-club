@@ -14,7 +14,7 @@ class App extends Component {
     username: null
   }
 
-  updateUser (userObject) {
+  updateUser = (userObject) => {
     this.setState(userObject)
   }
 
@@ -26,7 +26,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/sign-up" render={() => <SignUp updateUser={this.updateUser}/>}/>
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/login" render={() => <Login updateUser={this.updateUser}/>} />
             <Route component={NoMatch} />
           </Switch>
         </div>

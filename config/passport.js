@@ -1,7 +1,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
-const db = require("./models");
+const db = require("../models");
 
 passport.use(new LocalStrategy(
   {
@@ -9,7 +9,7 @@ passport.use(new LocalStrategy(
   },
   function(username, password, done) {
     // When a user attempts signon
-    db.User.findOne({
+    db.user.findOne({
       where: {
         username: username
       }
