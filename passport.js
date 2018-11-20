@@ -1,111 +1,39 @@
-//load bcrypt
-const bCrypt = require("bcrypt-nodejs");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
-module.exports = (passport, user) => {
-  const User = user;
-  const LocalStrategy = require("passport-local").Strategy;
+const db = require("./models");
 
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-
-  // used to deserialize the user
-  passport.deserializeUser((id, done) => {
-    User.findById(id).then(user => {
-      if (user) {
-        done(null, user.get());
-      } else {
-        done(user.errors, null);
+passport.use(new LocalStrategy(
+  {
+    usernameField: "username"
+  },
+  function(username, password, done) {
+    // When a user attempts signon
+    db.User.findOne({
+      where: {
+        username: username
       }
-    });
-  });
-
-  passport.use(
-    "local-signup",
-    new LocalStrategy(
-      {
-        usernameField: "username",
-        passwordField: "password",
-        passReqToCallback: true // allows us to pass back the entire request to the callback
-      },
-
-      function(req, username, password, done) {
-        var generateHash = password => {
-          return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
-        };
-
-        User.findOne({ where: { username: username } }).then(user => {
-          if (user) {
-            return done(null, false, {
-              message: "That email is already taken"
-            });
-          } else {
-            var userPassword = generateHash(password);
-            var data = {
-              username: username,
-              email: email,
-              password: userPassword,
-              firstname: req.body.firstname,
-              lastname: req.body.lastname
-            };
-
-            User.create(data).then((newUser, created) => {
-              if (!newUser) {
-                return done(null, false);
-              }
-
-              if (newUser) {
-                return done(null, newUser);
-              }
-            });
-          }
+    }).then(function(dbUser) {
+      if (!dbUser) {
+        return done(null, false, {
+          message: "Incorrect Username"
+        })
+      } else if (!dbUser.validPassword(password)) {
+        return done(null, false, {
+          message: "Incorrect Password"
         });
       }
-    )
-  );
+      return done(null, dbUser);
+    })
+  }
+))
 
-  //LOCAL SIGNIN
-  passport.use(
-    "local-signin",
-    new LocalStrategy(
-      {
-        // by default, local strategy uses username and password, we will override with email
-        usernameField: "username",
-        passwordField: "password",
-        passReqToCallback: true // allows us to pass back the entire request to the callback
-      },
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
 
-      function(req, username, password, done) {
-        var User = user;
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
 
-        console.log(req);
-
-        var isValidPassword = (userpass, password) => {
-          return bCrypt.compareSync(password, userpass);
-        };
-
-        User.findOne({ where: { username: username } })
-          .then(user => {
-            if (!user) {
-              return done(null, false, { message: "Username does not exist" });
-            }
-
-            if (!isValidPassword(user.password, password)) {
-              return done(null, false, { message: "Incorrect password." });
-            }
-
-            var userinfo = user.get();
-
-            return done(null, userinfo);
-          })
-          .catch(err => {
-            console.log("Error:", err);
-
-            return done(null, false, {
-              message: "Something went wrong with your Signin"
-            });
-          });
-      }
-    )
-  );
-};
+module.exports = passport;
