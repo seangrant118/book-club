@@ -30,5 +30,10 @@ module.exports = (sequelize, Sequelize) => {
     );
   });
 
+  User.associate = function(models) {
+    User.hasMany(models.post);
+    User.hasMany(models.comments);
+  }
+
   return User;
 };

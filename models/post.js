@@ -6,5 +6,14 @@ module.exports = (sequelize, Sequelize) => {
     img: { type: Sequelize.String, allowNull: false }
   })
 
+  Post.associate = function(models) {
+    Post.belongsTo(models.user, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
+    Post.hasMany(models.comments)
+  }
+
   return Post;
 }
