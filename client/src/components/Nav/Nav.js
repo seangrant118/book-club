@@ -14,6 +14,9 @@ class NavBar extends Component {
         <NavItem>
           <NavLink href="/login">Log in</NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink href="/posts">Log in</NavLink>
+        </NavItem>
       </Nav>
     );
   }
