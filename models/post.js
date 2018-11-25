@@ -3,7 +3,7 @@ module.exports = (sequelize, Sequelize) => {
     id: { autoIncrement: true, primaryKey: true, type: Sequelize.INTEGER },
     title: { type: Sequelize.STRING, notEmpty: true },
     body: { type: Sequelize.TEXT, notEmpty: true },
-    img: { type: Sequelize.String, allowNull: false }
+    img: { type: Sequelize.STRING, allowNull: false }
   })
 
   Post.associate = function(models) {
