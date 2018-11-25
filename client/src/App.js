@@ -6,6 +6,7 @@ import NavBar from "./components/Nav";
 import NoMatch from "./pages/NoMatch";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Posts from "./pages/Posts";
 
 class App extends Component {
 
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/sign-up" render={() => <SignUp updateUser={this.updateUser}/>}/>
             <Route exact path="/login" render={() => <Login updateUser={this.updateUser}/>} />
+            <Route exact path="posts" component={Posts} />
             <Route component={NoMatch} />
           </Switch>
         </div>
