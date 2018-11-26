@@ -12,15 +12,15 @@ const PORT = process.env.PORT || 3001;
 
 // Define Middleware
 app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Passport
 app.use(
   session({
     secret: "VOm4GldakkQ2ZBUwchMMdVCK1ncJr",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
   })
 )
 app.use(passport.initialize());
@@ -39,7 +39,7 @@ require("./routes/apiRoutes")(app);
 const models = require("./models");
 
 models.sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(function() {
     console.log("Database Connected");
 

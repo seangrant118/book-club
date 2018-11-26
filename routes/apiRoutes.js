@@ -19,4 +19,10 @@ module.exports = function(app) {
     console.log(req.user);
     res.json(req.user);
   });
+
+  app.post("/api/posts", function(req, res) {
+    db.post.create(req.body).then(function(posts) {
+      res.json(posts);
+    })
+  })
 };
