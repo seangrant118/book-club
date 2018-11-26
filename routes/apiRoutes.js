@@ -32,9 +32,13 @@ module.exports = function(app) {
     })
   })
 
-  app.get("/api/login", function(req, res) {
-    console.log(req.session.passport.user.username);
-    const username = req.session.passport.user.username;
-
+  app.delete("/api/posts/:id", function(req, res) {
+    db.post.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(posts) {
+      res.json(posts);
+    })
   })
 };
