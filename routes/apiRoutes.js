@@ -26,6 +26,12 @@ module.exports = function(app) {
     })
   })
 
+  app.get("/api/posts", function(req, res) {
+    db.post.findAll({}).then(function(posts) {
+      res.json(posts);
+    })
+  })
+
   app.get("/api/login", function(req, res) {
     console.log(req.session.passport.user.username);
     const username = req.session.passport.user.username;

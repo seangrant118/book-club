@@ -8,23 +8,48 @@ import {
   FormGroup,
   Label,
   Input,
-  Jumbotron
+  Jumbotron,
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle
 } from "reactstrap";
+
 import Axios from "axios";
 
 class Posts extends Component {
   state = {
     title: "",
     body: "",
-    img: ""
+    img: "",
+    posts: []
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.setState({
       loggedIn: this.props.loggedIn,
       username: this.props.username
-    })
+    });
+
+    this.getPosts();
   }
+
+  getPosts = () => {
+    Axios.get("/api/posts")
+      .then(response => {
+        console.log("Post response");
+        console.log(response.data);
+        this.setState({
+          posts: response.data
+        });
+      })
+      .catch(error => {
+        console.log("post error");
+        console.log(error);
+      });
+  };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -35,7 +60,7 @@ class Posts extends Component {
 
   handleSumbit = event => {
     event.preventDefault();
-    console.log(this.props.id)
+    console.log(this.props.id);
     Axios.post("/api/posts", {
       title: this.state.title,
       body: this.state.body,
@@ -61,6 +86,9 @@ class Posts extends Component {
   };
 
   render() {
+
+    const {posts: savedPosts} = this.state;
+
     return (
       <div>
         <Jumbotron>
@@ -106,6 +134,22 @@ class Posts extends Component {
                 <Button onClick={this.handleSumbit}>Submit</Button>
               </Form>
             </Col>
+          </Row>
+          <Row>
+            {!savedPosts.length ? (<h1>No Posts Found</h1>) : (
+              savedPosts.map(post => {
+                return (
+                  <Card>
+                    <CardImg src={post.img}/>
+                    <CardBody>
+                      <CardTitle>{post.title}</CardTitle>
+                      <CardSubtitle>Post ID: {post.id}</CardSubtitle>
+                      <CardText>{post.body}</CardText>
+                    </CardBody>
+                  </Card>
+                )
+              })
+            )}
           </Row>
         </Container>
       </div>
