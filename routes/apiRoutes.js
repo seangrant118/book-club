@@ -29,6 +29,6 @@ module.exports = function(app) {
   app.get("/api/login", function(req, res) {
     console.log(req.session.passport.user.username);
     const username = req.session.passport.user.username;
-    
+
   })
 };

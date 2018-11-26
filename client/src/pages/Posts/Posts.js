@@ -35,11 +35,12 @@ class Posts extends Component {
 
   handleSumbit = event => {
     event.preventDefault();
-
+    console.log(this.props.id)
     Axios.post("/api/posts", {
       title: this.state.title,
       body: this.state.body,
-      img: this.state.img
+      img: this.state.img,
+      userId: this.props.id
     })
       .then(response => {
         if (response.data) {

@@ -69,9 +69,9 @@ class App extends Component {
             <Route
               exact
               path="/posts"
-              render={() => <Posts {...this.props} />}
+              render={() => <Posts {...this.state} />}
             />
-            <Route component={NoMatch} {...this.props} />
+            <Route component={NoMatch} {...this.state} />
           </Switch>
         </div>
       </Router>
