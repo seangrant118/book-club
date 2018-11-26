@@ -12,7 +12,8 @@ import axios from "axios"
 class App extends Component {
   state = {
     loggedIn: false,
-    username: null
+    username: null,
+    id: null
   };
 
   componentDidMount() {

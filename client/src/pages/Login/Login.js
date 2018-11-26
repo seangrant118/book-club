@@ -9,12 +9,6 @@ class Login extends Component {
     password: ""
   };
 
-  // componentDidMount() {
-  //   if (this.props.username) {
-  //     return <Redirect to={{ pathname: "/" }} />;
-  //   }
-  // }
-
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -34,16 +28,17 @@ class Login extends Component {
         console.log("login response: ");
         console.log(response);
         if (response.status === 200) {
-          // update App.js state
-          this.props.updateUser({
-            loggedIn: true,
-            username: response.data.username
-          });
-          // update the state to redirect to home
-          this.setState({
-            redirectTo: "/"
-          });
-        }
+            // update App.js state
+            this.props.updateUser({
+              loggedIn: true,
+              username: response.data.username,
+              id: response.data.id
+            });
+            // update the state to redirect to home
+            this.setState({
+              redirectTo: "/"
+            });
+          }
       })
       .catch(error => {
         console.log("login error: ");
