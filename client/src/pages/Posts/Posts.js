@@ -78,6 +78,8 @@ class Posts extends Component {
         console.log(err);
       });
 
+      this.getPosts();
+
     this.setState({
       title: "",
       body: "",
