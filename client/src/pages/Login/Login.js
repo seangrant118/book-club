@@ -28,17 +28,17 @@ class Login extends Component {
         console.log("login response: ");
         console.log(response);
         if (response.status === 200) {
-            // update App.js state
-            this.props.updateUser({
-              loggedIn: true,
-              username: response.data.username,
-              id: response.data.id
-            });
-            // update the state to redirect to home
-            this.setState({
-              redirectTo: "/"
-            });
-          }
+          // update App.js state
+          this.props.updateUser({
+            loggedIn: true,
+            username: response.data.username,
+            id: response.data.id
+          });
+          // update the state to redirect to home
+          this.setState({
+            redirectTo: "/"
+          });
+        }
       })
       .catch(error => {
         console.log("login error: ");
@@ -52,7 +52,7 @@ class Login extends Component {
     } else {
       return (
         <Container>
-          <Form>
+          <Form onSubmit={this.handleSumbit}>
             <FormGroup>
               <Label for="userName">Username</Label>
               <Input

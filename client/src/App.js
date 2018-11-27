@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Posts from "./pages/Posts";
 import axios from "axios"
-
+import Discussion from "./pages/Discussion";
 
 class App extends Component {
   state = {
@@ -71,6 +71,11 @@ class App extends Component {
               exact
               path="/posts"
               render={() => <Posts {...this.state} />}
+            />
+            <Route
+              exact
+              path="/posts/:id"
+              render={(props) => <Discussion {...props} {...this.state} />}
             />
             <Route component={NoMatch} {...this.state} />
           </Switch>

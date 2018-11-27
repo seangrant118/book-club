@@ -41,4 +41,15 @@ module.exports = function(app) {
       res.json(posts);
     })
   })
+
+  app.get("/api/posts/:id", function(req, res) {
+    db.post.findOne({
+      include: [db.user],
+      where: {
+        id: req.params.id
+      }
+    }).then(function(posts) {
+      res.json(posts);
+    })
+  })
 };
