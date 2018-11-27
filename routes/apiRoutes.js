@@ -38,6 +38,14 @@ module.exports = function(app) {
     })
   })
 
+  app.get("/api/comments", function(req, res) {
+    db.comments.findAll({
+      include: [db.user, db.post]
+    }).then(function(comments) {
+      res.json(comments);
+    })
+  })
+
   app.delete("/api/posts/:id", function(req, res) {
     db.post.destroy({
       where: {

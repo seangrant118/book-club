@@ -27,11 +27,27 @@ class Discussion extends Component {
   state = {
     post: {},
     modal: false,
-    body: ""
+    body: "",
+    comments: []
   };
 
   componentDidMount() {
     this.getPost();
+    this.getComments();
+  }
+
+  getComments = () => {
+    Axios.get("/api/comments")
+      .then(response => {
+        console.log("Comment response")
+        console.log(response.data);
+        this.setState({
+          comments: response.data
+        });
+      }).catch(error => {
+        console.log("comment error");
+        console.log(error);
+      })
   }
 
   handleInputChange = event => {
@@ -74,6 +90,7 @@ class Discussion extends Component {
         console.log("not sent");
       }
       this.toggle();
+      this.getComments();
       this.setState({
         body: ""
       })
@@ -85,7 +102,7 @@ class Discussion extends Component {
       return <Redirect to={{ pathname: "/login" }} />;
     } else if (Object.keys(this.state.post).length !== 0) {
       const { post: savedPost } = this.state;
-      const { user } = savedPost;
+      const { comments: savedComments } = this.state;
 
       return (
         <div>
@@ -126,6 +143,22 @@ class Discussion extends Component {
                 </Button>
               </ModalFooter>
             </Modal>
+            {!savedComments.length ? ( <h1>This post has not comments yet!</h1>) : (
+              savedComments.map(comment => {
+                return (
+                  <Row>
+                    <Col size="md-12">
+                      <Card key={comment.id}>
+                        <CardBody>
+                          <CardTitle>Comment by: {comment.user.username}</CardTitle>
+                          <CardSubtitle>{comment.comment}</CardSubtitle>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+                )
+              })
+            )}
           </Container>
         </div>
       );

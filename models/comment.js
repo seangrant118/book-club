@@ -12,9 +12,9 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false
       }
     })
-    Comments.belongsTo(models.user, {
+    Comments.belongsTo(models.post, {
       foreignKey: {
-        allowNull: true
+        allowNull: false
       }
     })
   }
