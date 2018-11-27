@@ -37,7 +37,7 @@ class Discussion extends Component {
   }
 
   getComments = () => {
-    Axios.get("/api/comments")
+    Axios.get("/api/comments/" + this.props.match.params.id)
       .then(response => {
         console.log("Comment response")
         console.log(response.data);

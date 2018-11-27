@@ -38,9 +38,12 @@ module.exports = function(app) {
     })
   })
 
-  app.get("/api/comments", function(req, res) {
+  app.get("/api/comments/:id", function(req, res) {
     db.comments.findAll({
-      include: [db.user, db.post]
+      include: [db.user, db.post],
+      where: {
+        postId: req.params.id
+      }
     }).then(function(comments) {
       res.json(comments);
     })
