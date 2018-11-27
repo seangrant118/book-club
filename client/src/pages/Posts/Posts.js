@@ -16,7 +16,7 @@ import {
   CardTitle,
   CardSubtitle
 } from "reactstrap";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import Axios from "axios";
 
@@ -146,31 +146,47 @@ class Posts extends Component {
                 </Form>
               </Col>
             </Row>
-            <Row>
-              {!savedPosts.length ? (
-                <h1>No Posts Found</h1>
-              ) : (
-                savedPosts.map(post => {
-                  return (
-                    <Row>
-                      <Col>
-                        <Card key={post.id}>
-                          <CardImg src={post.img} />
-                          <CardBody>
-                            <CardTitle>{post.title}</CardTitle>
-                            <CardSubtitle>Post ID: {post.id}</CardSubtitle>
-                            <CardText>{post.body}</CardText>
-                          </CardBody>
-                          <Button onClick={() => this.deletePost(post.id)} color="danger" size="sm">
-                            Delete
-                          </Button>
-                        </Card>
-                      </Col>
-                    </Row>
-                  );
-                })
-              )}
-            </Row>
+            {!savedPosts.length ? (
+              <h1>No Posts Found</h1>
+            ) : (
+              savedPosts.map(post => {
+                return (
+                  <Row>
+                    <Col size="md-12">
+                      <Card key={post.id}>
+                        <CardBody>
+                          <Row>
+                            <Col md="9">
+                              <CardTitle>{post.title}</CardTitle>
+                              <CardSubtitle>Post ID: {post.id}</CardSubtitle>
+                              <CardText>{post.body}</CardText>
+                            </Col>
+                            <Col md="3">
+                              <CardImg src={post.img} />
+                            </Col>
+                          </Row>
+                        </CardBody>
+                        <Button
+                          onClick={() => this.deletePost(post.id)}
+                          color="danger"
+                          size="sm"
+                        >
+                          Delete
+                        </Button>
+                        <Button
+                          color="primary"
+                          tag={Link}
+                          to={"/posts/" + post.id}
+                        >
+                          Discussion
+                        </Button>
+                      </Card>
+                      <br />
+                    </Col>
+                  </Row>
+                );
+              })
+            )}
           </Container>
         </div>
       );
