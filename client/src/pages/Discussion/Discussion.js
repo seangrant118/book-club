@@ -57,6 +57,13 @@ class Discussion extends Component {
     });
   };
 
+  deleteComment = commentId => {
+    const { id: deleteId } = this.state.comments.find(({ id})=> commentId === id);
+    Axios.delete(`/api/comments/${deleteId}`)
+      .then(() => this.getComments())
+      .catch(err => console.log(err));
+  }
+
   getPost = () => {
     Axios.get("/api/posts/" + this.props.match.params.id)
       .then(response => {
@@ -153,6 +160,12 @@ class Discussion extends Component {
                           <CardTitle>Comment by: {comment.user.username}</CardTitle>
                           <CardSubtitle>{comment.comment}</CardSubtitle>
                         </CardBody>
+                        <Button 
+                          color="danger"
+                          size="sm"
+                          onClick={() => this.deleteComment(comment.id)}>
+                          Delete
+                          </Button>
                       </Card>
                     </Col>
                   </Row>

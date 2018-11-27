@@ -59,6 +59,16 @@ module.exports = function(app) {
     })
   })
 
+  app.delete("/api/comments/:id", function(req, res) {
+    db.comments.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(comments) {
+      res.json(comments);
+    })
+  })
+
   app.get("/api/posts/:id", function(req, res) {
     db.post.findOne({
       include: [db.user],
