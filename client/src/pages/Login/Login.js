@@ -75,7 +75,7 @@ class Login extends Component {
                 onChange={this.handleInputChange}
               />
             </FormGroup>
-            <Button onClick={this.handleSumbit}>Submit</Button>
+            <Button type="submit" onClick={this.handleSumbit}>Submit</Button>
           </Form>
         </Container>
       );

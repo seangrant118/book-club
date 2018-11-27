@@ -26,6 +26,12 @@ module.exports = function(app) {
     })
   })
 
+  app.post("/api/comments", function(req, res) {
+    db.comments.create(req.body).then(function(comment) {
+      res.json(comment);
+    })
+  })
+
   app.get("/api/posts", function(req, res) {
     db.post.findAll({}).then(function(posts) {
       res.json(posts);
